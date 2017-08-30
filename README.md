@@ -33,4 +33,19 @@ Bean之间几乎没有依赖关系，是不是很容易重用。
 ##### 第三章
 * Bean的获取都是通过getBean("idxxx")
 * 构造器注入配置：里面的配置可以byIndex、byType、byName
-* 
+* Spring IoC容器注入依赖资源主要有以下基本实现方式：
+     * 构造器注入：就是容器实例化Bean时注入那些依赖，通过在在Bean定义中指定构造器参数进行注入依赖，包括实例工厂方法参数注入依赖，但静态工厂方法参数不允许注入依赖；
+     * setter注入：通过setter方法进行注入依赖；
+     * 方法注入：能通过配置方式替换掉Bean方法，也就是通过配置改变Bean方法 功能。
+* 静态工厂方法实例时，工厂方法一定要是static的(底层应该是调用类名.method)
+* 实例Bean工厂方法实例时，工厂方法就不需要是static的(底层应该时根据Bean创建实例对象，然后调用method)
+* setter的string和int类型注入不同
+	* <property name="message" value="Hello World!"/>  (注意此处“value”中指定的全是字符串，由Spring容器将此字符串转换成属性所需要的类型，如果转换出错，将抛出相应的异常。Spring容器目前能对各种基本类型把配置的String参数转换为需要的类型。例如Spring类型转换系统对于boolean类型进行了容错处理，除了可以使用“true/false”标准的Java值进行注入，还能使用“yes/no”、“on/off”、“1/0”来代表“真/假”)
+	* <property name="index"><value>10</value></property>
+	* setter注入需要遵循 JavaBean getter/setter 方法命名约定
+* setter注入bean
+* setter注入Bean ID是使用idref，相当于bean的一个属性id，被设置了一个常量值
+* <ref>用来注入其他bean
+* 配置NavigationB时注意要确保比如array字段不为空值，这就需要或者在代码中赋值如“NavigationC[] array = new NavigationC[1];”，或者通过配置文件注入如“<list></list>”注入一个不包含条目的列表
+* Properties 继承于 Hashtable.表示一个持久的属性集.属性列表中每个键及其对应值都是一个字符串。
+* ref local、ref bean、ref parent，开始时弄不清楚ref local和bean的区别，最后发现local是找id的，可以提前暴露问题，local查当前xml，bean查所有，顺序没有查到，但实验结果是先查了当前的，然后才找了parent的
