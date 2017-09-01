@@ -49,3 +49,26 @@ Bean之间几乎没有依赖关系，是不是很容易重用。
 * 配置NavigationB时注意要确保比如array字段不为空值，这就需要或者在代码中赋值如“NavigationC[] array = new NavigationC[1];”，或者通过配置文件注入如“<list></list>”注入一个不包含条目的列表
 * Properties 继承于 Hashtable.表示一个持久的属性集.属性列表中每个键及其对应值都是一个字符串。
 * ref local、ref bean、ref parent，开始时弄不清楚ref local和bean的区别，最后发现local是找id的，可以提前暴露问题，local查当前xml，bean查所有，顺序没有查到，但实验结果是先查了当前的，然后才找了parent的
+* 自动配置 byName byType no constructor
+* 依赖检查 none、simple、object、all
+* 方法注入 如果要替换createPrinter()方法的返回值就使用查找方法注入(被注入的函数不执行)；如果想完全替换sayHello()方法体就使用方法替换注入
+	* 方法注入主要用于处理“singleton”作用域的Bean需要其他作用域的Bean时，采用Spring查找方法注入方式无需修改任何代码即能获取需要的其他作用域的Bean。
+* Spring 容器看作 beans，在 XML 配置文件中 beans 的 auto-wire 属性设置为 byName。然后，它尝试将它的属性与配置文件中定义为相同名称的 beans 进行匹配和连接。如果找到匹配项，它将注入这些 beans，否则，它将抛出异常。
+* singleton
+	* 指“singleton”作用域的Bean只会在每个Spring IoC容器中存在一个实例，而且其完整生命周期完全由Spring容器管理。对于所有获取该Bean的操作Spring容器将只返回同一个Bean。
+	* 在Spring容器中如果没指定作用域默认就是“singleton”，配置方式通过scope属性配置
+* prototype 每次返回新的
+* Spring中是用注册表的方式实现singleton和ptototype，保持无侵入式设计
+* 惰性初始化问题：加载一个类时，其内部类不会同时被加载。一个类被加载，当且仅当其某个静态成员（静态域、构造器、静态方法等）被调用时发生。静态内部类的加载过程：静态内部类的加载不需要依附外部类，在使用时才加载。不过在加载静态内部类的过程中也会加载外部类
+##### 第四章
+* InputStreamSource、Resource
+* 访问jar包下的文件可能有坑
+* 遇到资源加载问题时再复习
+##### 第五章
+* spring表达式
+	* 1）创建解析器：SpEL使用ExpressionParser接口表示解析器，提供SpelExpressionParser默认实现；
+	* 2）解析表达式：使用ExpressionParser的parseExpression来解析相应的表达式为Expression对象。
+	* 3）构造上下文：准备比如变量定义等等表达式需要的上下文数据。
+	* 4）求值：通过Expression接口的getValue方法根据上下文获得表达式值。
+##### 第六章
+* AOP
