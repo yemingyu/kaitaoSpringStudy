@@ -9,6 +9,7 @@ import com.sjf.spring.bean.HelloWorld;
 
 import cn.javass.spring.bean.ListTestBean;
 import cn.javass.spring.chapter2.helloworld.HelloApi;
+import cn.javass.spring.service.IHelloWorldService;
  
 /**
  * 测试类
@@ -89,14 +90,19 @@ public class Test {
 //        		 HelloApi bean2 = beanContext.getBean("bean2", HelloApi.class);  
 //        		 bean2.sayHello();//该Bean引用parent bean
          
-         ApplicationContext parentBeanContext =  
-        		 new ClassPathXmlApplicationContext("parentBeanInject.xml");  
-        		 //初始化当前容器  
-        		 ApplicationContext beanContext = new ClassPathXmlApplicationContext(  
-        		 new String[] {"localBeanInject.xml"}, parentBeanContext);  
-        		     HelloApi bean1 = beanContext.getBean("bean1", HelloApi.class);  
-        		     bean1.sayHello();//该Bean引用local bean  
-        		 HelloApi bean2 = beanContext.getBean("bean2", HelloApi.class);  
-        		 bean2.sayHello();//该Bean引用parent bean
+//         ApplicationContext parentBeanContext =  
+//        		 new ClassPathXmlApplicationContext("parentBeanInject.xml");  
+//        		 //初始化当前容器  
+//        		 ApplicationContext beanContext = new ClassPathXmlApplicationContext(  
+//        		 new String[] {"localBeanInject.xml"}, parentBeanContext);  
+//        		     HelloApi bean1 = beanContext.getBean("bean1", HelloApi.class);  
+//        		     bean1.sayHello();//该Bean引用local bean  
+//        		 HelloApi bean2 = beanContext.getBean("bean2", HelloApi.class);  
+//        		 bean2.sayHello();//该Bean引用parent bean
+         
+         ApplicationContext ctx =  new ClassPathXmlApplicationContext("HelloWorldAop.xml");  
+         IHelloWorldService helloworldService =  
+         ctx.getBean("helloWorldService", IHelloWorldService.class);  
+         helloworldService.sayHello(); 
 	}
 }
