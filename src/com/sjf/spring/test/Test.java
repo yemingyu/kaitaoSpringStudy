@@ -1,4 +1,7 @@
 package com.sjf.spring.test;
+import java.lang.reflect.Constructor;
+import java.text.DateFormat.Field;
+
 import org.junit.Assert;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +12,7 @@ import com.sjf.spring.bean.HelloWorld;
 
 import cn.javass.spring.bean.ListTestBean;
 import cn.javass.spring.chapter2.helloworld.HelloApi;
+import cn.javass.spring.chapter2.helloworld.Hero;
 import cn.javass.spring.service.IHelloWorldService;
  
 /**
@@ -104,5 +108,22 @@ public class Test {
          IHelloWorldService helloworldService =  
          ctx.getBean("helloWorldService", IHelloWorldService.class);  
          helloworldService.sayHello(); 
+         
+         String className = "cn.javass.spring.chapter2.helloworld.Hero";
+         try {
+             Class pClass1=Class.forName(className);
+             Class pClass2=Hero.class;
+             Class pClass3=new Hero().getClass();
+             Constructor c= pClass1.getConstructor();
+             //通过构造器实例化
+             Hero h2= (Hero) pClass1.newInstance();
+//             Field f1= h2.getClass().getDeclaredField("name");
+         } catch (Exception e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         }
+         
+         
+         
 	}
 }
